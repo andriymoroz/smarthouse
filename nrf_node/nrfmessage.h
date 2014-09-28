@@ -1,12 +1,42 @@
 #ifndef NRF_MESSAGE_H
 #define NRF_MESSAGE_H
 
+typedef enum message_type_e
+{
+	MsgType_Void = 0,
+	MsgType_Network,
+	MsgType_Data,
+
+	MSG_TYPE_NUM
+} MsgType;
+
+typedef enum network_message_subtype_e
+{
+	NetMsgSubtype_Void = 0,
+	NetMsgSubtype_Ping,
+	NetMsgSubtype_ReqAddress,
+	NetMsgSubtype_SetAddress,
+	NetMsgSubtype_Status,
+
+	NET_MSG_SUBTYPE_NUM
+} NetMsgSubtype;
+
+typedef enum data_message_subtype_e
+{
+	DataMsgSubtype_Void = 0,
+	DataMsgSubtype_Temp,
+	DataMsgSubtype_State,
+	DataMsgSubtype_Humidity,
+	DataMsgSubtype_Status,
+	DataMsgSubtype_ReqData,
+
+	DATA_MSG_SUBTYPE_NUM
+} DataMsgSubtype;
+
 typedef struct {
-	int msgtype;
+	MsgType msgtype;
 	int msgsubtype;
-	union {
-		int test;
-	} data;
+	uint8_t data[4];
 } NrfMessage;
 
 #if 5/*sizeof(NrfMessage)*/ > 32

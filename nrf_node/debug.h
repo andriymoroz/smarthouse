@@ -7,5 +7,9 @@
 #define debug_print Serial.print
 #define debug_println Serial.println
 #else
+#define debug_init
+#define debug_print
+#define debug_println
 #endif
+
 #endif // DEBUG_H
