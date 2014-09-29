@@ -4,8 +4,12 @@
 typedef enum message_type_e
 {
 	MsgType_Void = 0,
-	MsgType_Network,
-	MsgType_Data,
+	MsgType_Ping,
+	MsgType_ReqAddress,
+	MsgType_SetAddress,
+	MsgType_ReqStatus,
+	MsgType_Status,
+
 
 	MSG_TYPE_NUM
 } MsgType;
@@ -16,7 +20,7 @@ typedef enum network_message_subtype_e
 	NetMsgSubtype_Ping,
 	NetMsgSubtype_ReqAddress,
 	NetMsgSubtype_SetAddress,
-	NetMsgSubtype_Status,
+	NetMsgSubtype_
 
 	NET_MSG_SUBTYPE_NUM
 } NetMsgSubtype;
