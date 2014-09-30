@@ -1,6 +1,18 @@
 #ifndef NRF_MESSAGE_H
 #define NRF_MESSAGE_H
 
+typedef union nrf_message
+{
+	uint32_t ping;
+	uint32_t address;
+	uint32_t status;
+	struct {
+		float temperature;
+		float humidity;
+	} dht;
+} NrfMessage;
+
+
 typedef enum message_type_e
 {
 	MsgType_Void = 0,
@@ -9,6 +21,8 @@ typedef enum message_type_e
 	MsgType_SetAddress,
 	MsgType_ReqStatus,
 	MsgType_Status,
+	MsgType_TempHum,
+	//MsgType_
 
 
 	MSG_TYPE_NUM
@@ -20,7 +34,7 @@ typedef enum network_message_subtype_e
 	NetMsgSubtype_Ping,
 	NetMsgSubtype_ReqAddress,
 	NetMsgSubtype_SetAddress,
-	NetMsgSubtype_
+	//NetMsgSubtype_
 
 	NET_MSG_SUBTYPE_NUM
 } NetMsgSubtype;
@@ -37,11 +51,11 @@ typedef enum data_message_subtype_e
 	DATA_MSG_SUBTYPE_NUM
 } DataMsgSubtype;
 
-typedef struct {
-	MsgType msgtype;
-	int msgsubtype;
-	uint8_t data[4];
-} NrfMessage;
+//typedef struct {
+//	MsgType msgtype;
+//	int msgsubtype;
+//	uint8_t data[4];
+//} NrfMessage;
 
 #if 5/*sizeof(NrfMessage)*/ > 32
 #error "NrfMessage too long!"

@@ -56,20 +56,16 @@ void send_sensor_data()
 #endif
 
 	float h = dht.readHumidity();
-	// Read temperature as Celsius
-
 	float t = dht.readTemperature();
-	// Read temperature as Fahrenheit
 
 	debug_print("Temp: "); debug_print(t); debug_println("*C");
 	debug_print("Humidity: "); debug_print(h); debug_println("%");
 
-	msg.msgtype = MsgType_Data;
-	msg.msgsubtype = DataMsgSubtype_Temp;
-	msg.data[0] = *((int*)(&t));
+	msg.dht.temperature = t;
+	msg.dht.humidity = h;
 
-	RF24NetworkHeader header(0);
-	if (!network.write(header, &msg,sizeof(msg)))
+	RF24NetworkHeader header(0, MsgType_TempHum);
+	if (!network.write(header, &msg, sizeof(msg)))
 	{
 		debug_println("Error sending DHT sensor data");
 		return;
@@ -86,15 +82,9 @@ void send_sensor_data()
 
 void loop(void){
 
-	network.update();								// Check the network regularly
+	network.update();
+	send_sensor_data();
 
-
-	while (network.available())
-	{
-		// Is there anything ready for us?
-		RF24NetworkHeader header;
-		network.read(header, &msg, sizeof(msg));
-		send_sensor_data();
-	}
+	delay(8000);
 }
 
