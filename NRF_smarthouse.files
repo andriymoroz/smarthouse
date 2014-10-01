@@ -9,3 +9,6 @@ nrf_base/nrf_base.cpp
 RF24Network/RPi/RF24Network/examples/helloworld_rx.cpp
 RF24Network/RPi/RF24Network/examples/helloworld_tx.cpp
 RF24Network/RPi/RF24Network/examples/rx-test.cpp
+RF24Network/RPi/RF24Network/RF24Network.cpp
+RF24Network/RPi/RF24Network/RF24Network.h
+RF24Network/RPi/RF24Network/RF24Network_config.h

@@ -10,6 +10,9 @@ typedef union nrf_message
 		float temperature;
 		float humidity;
 	} dht;
+	struct {
+		float temperature;
+	} ds;
 } NrfMessage;
 
 
@@ -22,7 +25,7 @@ typedef enum message_type_e
 	MsgType_ReqStatus,
 	MsgType_Status,
 	MsgType_TempHum,
-	//MsgType_
+	MsgType_Temp,
 
 
 	MSG_TYPE_NUM

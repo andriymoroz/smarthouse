@@ -13,8 +13,9 @@
 
 
 
-#define NODE_KITCHEN
-
+//#define NODE_KITCHEN
+//#define NODE_BASEMENT
+#define NODE_ATTIC
 
 // Global definitions
 #define DEBUG
@@ -46,18 +47,18 @@
 
 // NRF Network definitions
 //#define NRF_POWER_PIN 6
-#define NRF_CE_PIN   9
-#define NRF_CSN_PIN  10
-#define NRF_CHANNEL_MAIN 99
+#define NRF_CE_PIN			9
+#define NRF_CSN_PIN			10
+#define NRF_CHANNEL_MAIN	99
 
 
 
 
 #ifdef NODE_BASEMENT
+#define NODE_NAME "Basement"
+#define NODE_ADDRESS 011
 #define SENSOR_DHT
-#define DHT_TYPE DHT11   // DHT 11
-//#define DHT_TYPE DHT22   // DHT 22  (AM2302)
-//#define DHT_TYPE DHT21   // DHT 21 (AM2301)
+#define DHT_TYPE DHT11
 #define SENSOR_ONOFF
 #endif
 
@@ -71,5 +72,11 @@
 #define NODE_SLEEP 0
 #endif
 
+#ifdef NODE_ATTIC
+#define NODE_NAME "Attic"
+#define NODE_ADDRESS 02
+#define SENSOR_DS
+#define NODE_SLEEP 0
+#endif
 
 #endif // COMMON_H
