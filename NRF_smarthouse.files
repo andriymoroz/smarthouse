@@ -12,3 +12,4 @@ RF24Network/RPi/RF24Network/examples/rx-test.cpp
 RF24Network/RPi/RF24Network/RF24Network.cpp
 RF24Network/RPi/RF24Network/RF24Network.h
 RF24Network/RPi/RF24Network/RF24Network_config.h
+nrf_node/sleep.h

@@ -13,6 +13,9 @@ typedef union nrf_message
 	struct {
 		float temperature;
 	} ds;
+	struct {
+		char name[10];
+	} id;
 } NrfMessage;
 
 
@@ -26,6 +29,7 @@ typedef enum message_type_e
 	MsgType_Status,
 	MsgType_TempHum,
 	MsgType_Temp,
+	MsgType_ID,
 
 
 	MSG_TYPE_NUM

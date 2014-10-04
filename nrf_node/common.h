@@ -20,6 +20,9 @@
 // Global definitions
 #define DEBUG
 
+#define POWER_UP(pin)		pinMode(pin, OUTPUT); digitalWrite(pin, HIGH);
+#define POWER_DOWN(pin)		digitalWrite(pin, LOW); pinMode(pin, INPUT);
+
 //					,-++--++-.
 //				----+10     9+----
 //				----+11     8+---- DHT/DS18B20 data
@@ -41,8 +44,8 @@
 #define DS_POWER_PIN	7
 
 // DHT11/21
-#define DHT_DATA_PIN	8
-#define DHT_POWER_PIN	7
+//#define DHT_DATA_PIN	8
+//#define DHT_POWER_PIN	7
 
 
 // NRF Network definitions
@@ -75,8 +78,16 @@
 #ifdef NODE_ATTIC
 #define NODE_NAME "Attic"
 #define NODE_ADDRESS 02
+#define NODE_SLEEP 1
+
 #define SENSOR_DS
-#define NODE_SLEEP 0
+#define SENSOR_DHT
+#define DHT_TYPE DHT11
+// alternative DHT11/21 connection
+#define DHT_DATA_PIN	5
+#define DHT_POWER_PIN	6
 #endif
+
+
 
 #endif // COMMON_H
