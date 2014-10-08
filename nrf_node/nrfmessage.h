@@ -1,6 +1,9 @@
 #ifndef NRF_MESSAGE_H
 #define NRF_MESSAGE_H
 
+
+#define MAX_NODE_NAME_LEN 20
+
 typedef union nrf_message
 {
 	uint32_t ping;
@@ -14,7 +17,7 @@ typedef union nrf_message
 		float temperature;
 	} ds;
 	struct {
-		char name[10];
+		char name[MAX_NODE_NAME_LEN+1];
 	} id;
 } NrfMessage;
 
@@ -30,7 +33,6 @@ typedef enum message_type_e
 	MsgType_TempHum,
 	MsgType_Temp,
 	MsgType_ID,
-
 
 	MSG_TYPE_NUM
 } MsgType;
@@ -57,12 +59,6 @@ typedef enum data_message_subtype_e
 
 	DATA_MSG_SUBTYPE_NUM
 } DataMsgSubtype;
-
-//typedef struct {
-//	MsgType msgtype;
-//	int msgsubtype;
-//	uint8_t data[4];
-//} NrfMessage;
 
 #if 5/*sizeof(NrfMessage)*/ > 32
 #error "NrfMessage too long!"
