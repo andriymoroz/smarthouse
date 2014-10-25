@@ -44,8 +44,8 @@ unsigned long last_time_sent;
 //This is for sleep mode. It is not really required, as users could just use the number 0 through 10
 typedef enum { wdt_16ms = 0, wdt_32ms, wdt_64ms, wdt_128ms, wdt_250ms, wdt_500ms, wdt_1s, wdt_2s, wdt_4s, wdt_8s } wdt_prescalar_e;
 
-NrfMessage msg;
-NrfMessage id_msg;
+NrfMessageV2 msg;
+NrfMessageV2 id_msg(0);
 
 void setup(void)
 {
@@ -57,10 +57,10 @@ void setup(void)
 	radio.begin();
 	radio.setPALevel(RF24_PA_MAX);
 	network.begin(NRF_CHANNEL_MAIN, NODE_ADDRESS);
-	strncpy(id_msg.id.name, NODE_NAME, MAX_NODE_NAME_LEN);
-	id_msg.id.name[MAX_NODE_NAME_LEN] = '\0';
+	strncpy(id_msg.data.id.name, NODE_NAME, MAX_NODE_NAME_LEN);
+	id_msg.data.id.name[MAX_NODE_NAME_LEN] = '\0';
 	debug_print("Debug log. Node: '");
-	debug_print(id_msg.id.name);
+	debug_print(id_msg.data.id.name);
 	debug_print("'. Address: ");
 	debug_println(NODE_ADDRESS);
 
@@ -126,8 +126,8 @@ void send_sensor_data()
 		debug_print("Temp: "); debug_print(t); debug_println("*C");
 		debug_print("Humidity: "); debug_print(h); debug_println("%");
 
-		msg.dht.temperature = t;
-		msg.dht.humidity = h;
+		msg.data.dht.temperature = t;
+		msg.data.dht.humidity = h;
 
 		RF24NetworkHeader header(0, MsgType_TempHum);
 		if (!network.write(header, &msg, sizeof(msg)))
