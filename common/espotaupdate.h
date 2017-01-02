@@ -4,9 +4,6 @@
 #include <ESP8266httpUpdate.h>
 #include "credentials.h"
 
-#ifndef __FILENAME__
-#define __FILENAME__ (__builtin_strrchr(__FILE__, '/') ? __builtin_strrchr(__FILE__, '/') + 1 : __FILE__)
-#endif
 #define FW_UPD_URL "http://"FW_UPD_HOST"/iot/iotupdate.php"
 
 class ESPOTAUpdate: public ESP8266HTTPUpdate

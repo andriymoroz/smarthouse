@@ -27,5 +27,8 @@
 *.out
 *.app
 
+# QT Creator
+*.creator.user
+
 # Private
 my_credentials.h

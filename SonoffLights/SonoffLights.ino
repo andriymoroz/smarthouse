@@ -9,42 +9,50 @@
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
-#include <ESP8266HTTPClient.h>
-#include <ESP8266httpUpdate.h>
 
 #include "credentials.h"
 #include "espotaupdate.h"
-#include "matrix.h"
 #include "mqttclient.h"
 
 #define IMAGE_NAME __FILENAME__
-#define IMAGE_VERSION "0.1"
-#define MQTT_MSG_TOPIC "DotMatrixDisplay/message"
+#define IMAGE_VERSION "0.3"
+#define MQTT_MSG_TOPIC "room/smallbedroom/mainlight/state"
 #define USE_SERIAL Serial
+#define ONOFF_PIN 12
 
 const char wmVer[] = "VWM_"IMAGE_VERSION;
 
 ESP8266WiFiMulti WiFiMulti;
 
 ESPOTAUpdate otaUpdater(IMAGE_NAME, IMAGE_VERSION, &USE_SERIAL);
-DotMatrix *pDotMatrix;
 MQTTClient *pMQTTClient;
+char lightState = '1';
 
 void mqtt_callback(char* topic, byte* payload, unsigned int length)
 {
     char buf[length + 1];
 
-    for (int i = 0; i < length; i++)
+    if (length)
     {
-        buf[i] = ((char)payload[i]);
+        for (int i = 0; i < length; i++)
+        {
+            buf[i] = ((char)payload[i]);
+        }
+        buf[length] = '\0';
+        Serial.printf("Message arrived '%s'\n", buf);
+        if (buf[0] != lightState)
+        {
+            digitalWrite(ONOFF_PIN, (buf[0] == '1')? HIGH : LOW);
+            pMQTTClient->publish(MQTT_MSG_TOPIC, buf, true);
+            lightState = buf[0];
+        }
     }
-    buf[length] = '\0';
-
-    Serial.printf("Message arrived '%s'\n", buf);
-    pDotMatrix->setMessage(buf);
 }
 
-void setup() {
+void setup()
+{
+    pinMode(ONOFF_PIN, OUTPUT);
+    digitalWrite(ONOFF_PIN, HIGH);
 
     USE_SERIAL.begin(9600);
     USE_SERIAL.println(wmVer);
@@ -81,11 +89,11 @@ void setup() {
                 break;
             }
 
-            pDotMatrix = new DotMatrix(0, 12, 1);
-
             String clientName(__FILENAME__);
             clientName += "_ESP8266MQTTClient1";
             pMQTTClient = new MQTTClient(clientName.c_str());
+            if (pMQTTClient->publish(MQTT_MSG_TOPIC, "1", true))
+                Serial.printf("Published '1'\n");
             pMQTTClient->subscribe(MQTT_MSG_TOPIC, mqtt_callback);
             break;
         }
@@ -101,7 +109,7 @@ void setup() {
 void loop() {
 
     //yield();
-    pDotMatrix->loop();
+    //pDotMatrix->loop();
     //USE_SERIAL.printf("MQTT loop...\n");
     pMQTTClient->loop();
     //delay(1000);
