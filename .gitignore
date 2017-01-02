@@ -26,3 +26,6 @@
 *.exe
 *.out
 *.app
+
+# Private
+my_credentials.h
