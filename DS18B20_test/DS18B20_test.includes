@@ -1,0 +1,13 @@
+~/.arduino15/packages/esp8266/hardware/esp8266/2.3.0/tools/sdk/include
+~/.arduino15/packages/esp8266/hardware/esp8266/2.3.0/tools/sdk/lwip/include
+~/.arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266
+~/.arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/nodemcu
+~/.arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266
+~/.arduino15/packages/esp8266/hardware/esp8266/2.3.0/variants/nodemcu
+~/.arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266httpUpdate/src
+~/.arduino15/packages/esp8266/hardware/esp8266/2.3.0/libraries/ESP8266HTTPClient/src
+~/Arduino/libraries/ESP8266WiFiMulti/src
+~/Arduino/libraries/PubSubClient/src
+~/Arduino/libraries/DallasTemperature/src
+.
+
