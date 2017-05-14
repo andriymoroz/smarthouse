@@ -1,16 +1,5 @@
-/**
- * httpUpdate.ino
- *
- *  Created on: 27.11.2015
- *
- */
-
-#include <Arduino.h>
-
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
-
-#include "credentials.h"
 #include "espotaupdate.h"
 #include "mqttclient.h"
 
@@ -24,7 +13,7 @@ const char wmVer[] = "VWM_"IMAGE_VERSION;
 
 ESP8266WiFiMulti WiFiMulti;
 
-ESPOTAUpdate otaUpdater(IMAGE_NAME, IMAGE_VERSION, &USE_SERIAL);
+ESPOTAUpdate otaUpdater(&Serial);
 MQTTClient *pMQTTClient;
 char lightState = '1';
 
@@ -57,7 +46,8 @@ void setup()
     USE_SERIAL.begin(9600);
     USE_SERIAL.println(wmVer);
 
-    for(uint8_t t = 4; t > 0; t--) {
+    for(uint8_t t = 4; t > 0; t--)
+    {
         USE_SERIAL.printf("[SETUP] Image: %s, version %s. Update in %d...\n", IMAGE_NAME, IMAGE_VERSION, t);
         USE_SERIAL.flush();
         delay(1000);
@@ -70,7 +60,7 @@ void setup()
         if((WiFiMulti.run() == WL_CONNECTED))
         {
             USE_SERIAL.printf("[SETUP] Trying to do OTA update...\n");
-            int updStatus = otaUpdater.fwUpdate();
+            int updStatus = otaUpdater.fwUpdate((String(IMAGE_NAME) + ".bin").c_str(), IMAGE_VERSION);
             switch(updStatus)
             {
             case HTTP_UPDATE_FAILED:

@@ -9,31 +9,29 @@
 class ESPOTAUpdate: public ESP8266HTTPUpdate
 {
 public:
-    ESPOTAUpdate(const char *name, const char *version, HardwareSerial *pSerial = NULL):
+    ESPOTAUpdate(HardwareSerial *pSerial = NULL):
         m_pSerial(pSerial),
-        m_sURL(FW_UPD_URL),
-        m_sVersion(version)
-
+        m_sURL(FW_UPD_URL)
     {
-        m_sURL = m_sURL + "?img=" + name + ".bin&ver=" + version;
     }
 
-    HTTPUpdateResult fwUpdate(int attempts = 1)
+    HTTPUpdateResult fwUpdate(const char *name, const char *version, int attempts = 1)
     {
+        m_sURL = m_sURL + "?img=" + name + "&ver=" + version;
+
         if (m_pSerial)
         {
             m_pSerial->printf("Fetching  %s\n", m_sURL.c_str());
             m_pSerial->flush();
         }
 
-        HTTPUpdateResult res = update(m_sURL, m_sVersion);
+        HTTPUpdateResult res = update(m_sURL, version);
 
         return res;
     }
 
 private:
     String m_sURL;
-    String m_sVersion;
     HardwareSerial *m_pSerial;
 
 
